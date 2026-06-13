@@ -245,7 +245,7 @@ trasformano da "esercizio" a "portfolio che impressiona".
 > data. A fine percorso questa roadmap racconta da sola il tuo progresso.
 
 ### Stato avanzamento
-- [ ] Fase 0 — Setup
+- [x] Fase 0 — Setup
 - [ ] Fase 1 — CRUD base
 - [ ] Fase 2 — JPA + PostgreSQL
 - [ ] Fase 3 — Validazione & errori
