@@ -1,0 +1,30 @@
+### Lista di tutti i prodotti
+GET http://localhost:8080/products
+
+### Modifica il prodotto 1
+PUT http://localhost:8080/products/1
+Content-Type: application/json
+
+{
+  "name": "Cuffie Bluetooth PRO",
+  "description": "Cuffie wireless con cancellazione del rumore",
+  "price": 69.90,
+  "stock": 25
+}
+
+### Cancella il prodotto 2
+DELETE http://localhost:8080/products/2
+
+### Crea un nuovo prodotto
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Tastiera meccanica",
+  "description": "Tastiera RGB switch blu",
+  "price": 79.90,
+  "stock": 15
+}
+
+### Lista di tutti i prodotti
+GET http://localhost:8080/products

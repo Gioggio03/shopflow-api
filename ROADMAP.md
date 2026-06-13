@@ -246,7 +246,7 @@ trasformano da "esercizio" a "portfolio che impressiona".
 
 ### Stato avanzamento
 - [x] Fase 0 — Setup
-- [ ] Fase 1 — CRUD base
+- [x] Fase 1 — CRUD base
 - [ ] Fase 2 — JPA + PostgreSQL
 - [ ] Fase 3 — Validazione & errori
 - [ ] Fase 4 — Sicurezza JWT
