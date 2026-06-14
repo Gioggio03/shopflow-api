@@ -1,57 +1,64 @@
 package com.shopflow.shopflow_api.service;
 
+import com.shopflow.shopflow_api.model.Category;
 import com.shopflow.shopflow_api.model.Product;
+import com.shopflow.shopflow_api.repository.CategoryRepository;
+import com.shopflow.shopflow_api.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Set;
 
 @Service
 public class ProductService {
 
-    private final List<Product> products = new ArrayList<>();
-    private final AtomicLong idCounter = new AtomicLong();
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    // dati di esempio, così abbiamo qualcosa da leggere
-    public ProductService() {
-        products.add(new Product(idCounter.incrementAndGet(),
-                "Cuffie Bluetooth", "Cuffie wireless over-ear",
-                new BigDecimal("49.90"), 30));
-        products.add(new Product(idCounter.incrementAndGet(),
-                "Mouse ergonomico", "Mouse verticale wireless",
-                new BigDecimal("29.90"), 50));
+    public ProductService(ProductRepository productRepository,
+                          CategoryRepository categoryRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public List<Product> findAll() {
-        return products;
+        return productRepository.findAll();
     }
 
     public Optional<Product> findById(Long id) {
-        return products.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst();
+        return productRepository.findById(id);
     }
 
-    public Product create(Product product) {
-        product.setId(idCounter.incrementAndGet());
-        products.add(product);
-        return product;
+    public Product create(Product product, Set<Long> categoryIds) {
+        product.setCategories(resolveCategories(categoryIds));
+        return productRepository.save(product);
     }
 
-    public Optional<Product> update(Long id, Product updated) {
-        return findById(id).map(existing -> {
+    public Optional<Product> update(Long id, Product updated, Set<Long> categoryIds) {
+        return productRepository.findById(id).map(existing -> {
             existing.setName(updated.getName());
             existing.setDescription(updated.getDescription());
             existing.setPrice(updated.getPrice());
             existing.setStock(updated.getStock());
-            return existing;
+            existing.setCategories(resolveCategories(categoryIds));
+            return productRepository.save(existing);
         });
     }
 
     public boolean delete(Long id) {
-        return products.removeIf(p -> p.getId().equals(id));
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    private Set<Category> resolveCategories(Set<Long> categoryIds) {
+        if (categoryIds == null || categoryIds.isEmpty()) {
+            return new HashSet<>();
+        }
+        return new HashSet<>(categoryRepository.findAllById(categoryIds));
     }
 }
