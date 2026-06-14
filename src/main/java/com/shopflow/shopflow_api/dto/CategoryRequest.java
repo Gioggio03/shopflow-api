@@ -1,4 +1,6 @@
 package com.shopflow.shopflow_api.dto;
 
-public record CategoryRequest(String name) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CategoryRequest(@NotBlank String name) {
 }

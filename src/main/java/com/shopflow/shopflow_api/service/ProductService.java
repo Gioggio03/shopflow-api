@@ -5,7 +5,8 @@ import com.shopflow.shopflow_api.model.Product;
 import com.shopflow.shopflow_api.repository.CategoryRepository;
 import com.shopflow.shopflow_api.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +24,8 @@ public class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Page<Product> findAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     public Optional<Product> findById(Long id) {
