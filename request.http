@@ -1,30 +1,40 @@
-### Lista di tutti i prodotti
-GET http://localhost:8080/products
-
-### Modifica il prodotto 1
-PUT http://localhost:8080/products/1
+### Crea categoria Elettronica
+POST http://localhost:8080/categories
 Content-Type: application/json
 
-{
-  "name": "Cuffie Bluetooth PRO",
-  "description": "Cuffie wireless con cancellazione del rumore",
-  "price": 69.90,
-  "stock": 25
-}
+{ "name": "Elettronica" }
 
-### Cancella il prodotto 2
-DELETE http://localhost:8080/products/2
+### Crea categoria Offerte
+POST http://localhost:8080/categories
+Content-Type: application/json
 
-### Crea un nuovo prodotto
+{ "name": "Offerte" }
+
+### Lista categorie
+GET http://localhost:8080/categories
+
+### Prodotto CON categorie
 POST http://localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "Tastiera meccanica",
-  "description": "Tastiera RGB switch blu",
-  "price": 79.90,
-  "stock": 15
+  "name": "Smartphone XZ",
+  "description": "Telefono 5G",
+  "price": 299.90,
+  "stock": 20,
+  "categoryIds": [1, 2]
 }
 
-### Lista di tutti i prodotti
+### Prodotto SENZA categorie (categoria facoltativa)
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Cavo USB-C",
+  "description": "Cavo da 1 metro",
+  "price": 9.90,
+  "stock": 100
+}
+
+### Lista prodotti (vedi le categorie annidate)
 GET http://localhost:8080/products

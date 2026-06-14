@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import java.net.URI;
 import java.util.List;
-
+import com.shopflow.shopflow_api.dto.CategoryResponse;
+import java.util.Set;
+import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -45,7 +47,7 @@ public class ProductController {
     //PostMapping invece non ha bisogno dell'id infatti gli basta il path ereditato
     @PostMapping
     public ResponseEntity<ProductResponse> create(@RequestBody ProductRequest request) {
-        Product created = productService.create(toEntity(request));
+        Product created = productService.create(toEntity(request), request.categoryIds());
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -53,11 +55,12 @@ public class ProductController {
                 .toUri();
         return ResponseEntity.created(location).body(toResponse(created));
     }
+    
     //@RequestBosy dice a Spring: "prendi il JSON che arriva nel corpo della richiesta e convertilo in un oggetto Product
     //@PathVariable Long id — prende il numero dall'URL (in /products/1 cattura l'1) e lo mette nel parametro id. Lo usi quando l'informazione sta nel percorso.
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> update(@PathVariable Long id, @RequestBody ProductRequest request) {
-        return productService.update(id, toEntity(request))
+        return productService.update(id, toEntity(request), request.categoryIds())
                 .map(this::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -74,8 +77,11 @@ public class ProductController {
     // --- metodi di traduzione (mapping) ---
 
     private ProductResponse toResponse(Product p) {
+        Set<CategoryResponse> categories = p.getCategories().stream()
+                .map(c -> new CategoryResponse(c.getId(), c.getName()))
+                .collect(Collectors.toSet());
         return new ProductResponse(p.getId(), p.getName(), p.getDescription(),
-                p.getPrice(), p.getStock());
+                p.getPrice(), p.getStock(), categories);
     }
 
     private Product toEntity(ProductRequest req) {
