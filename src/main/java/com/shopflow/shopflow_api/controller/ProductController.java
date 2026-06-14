@@ -15,10 +15,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import java.net.URI;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.shopflow.shopflow_api.dto.CategoryResponse;
 import java.util.Set;
 import java.util.stream.Collectors;
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -30,10 +32,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> getAll() {
-        return productService.findAll().stream()
-                .map(this::toResponse)
-                .toList();
+    public Page<ProductResponse> getAll(Pageable pageable) {
+        return productService.findAll(pageable).map(this::toResponse);
     }
 
     @GetMapping("/{id}")
@@ -46,7 +46,7 @@ public class ProductController {
     //GetMapping eredita il path da RequestMapping e gli aggiunge l'id
     //PostMapping invece non ha bisogno dell'id infatti gli basta il path ereditato
     @PostMapping
-    public ResponseEntity<ProductResponse> create(@RequestBody ProductRequest request) {
+    public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest request) {
         Product created = productService.create(toEntity(request), request.categoryIds());
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -59,7 +59,7 @@ public class ProductController {
     //@RequestBosy dice a Spring: "prendi il JSON che arriva nel corpo della richiesta e convertilo in un oggetto Product
     //@PathVariable Long id — prende il numero dall'URL (in /products/1 cattura l'1) e lo mette nel parametro id. Lo usi quando l'informazione sta nel percorso.
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> update(@PathVariable Long id, @RequestBody ProductRequest request) {
+    public ResponseEntity<ProductResponse> update(@PathVariable Long id,@Valid @RequestBody ProductRequest request) {
         return productService.update(id, toEntity(request), request.categoryIds())
                 .map(this::toResponse)
                 .map(ResponseEntity::ok)

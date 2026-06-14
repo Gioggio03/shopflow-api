@@ -1,40 +1,10 @@
-### Crea categoria Elettronica
-POST http://localhost:8080/categories
-Content-Type: application/json
-
-{ "name": "Elettronica" }
-
-### Crea categoria Offerte
-POST http://localhost:8080/categories
-Content-Type: application/json
-
-{ "name": "Offerte" }
-
-### Lista categorie
-GET http://localhost:8080/categories
-
-### Prodotto CON categorie
+### Prodotto NON valido (nome vuoto, prezzo negativo)
 POST http://localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "Smartphone XZ",
-  "description": "Telefono 5G",
-  "price": 299.90,
-  "stock": 20,
-  "categoryIds": [1, 2]
+  "name": "",
+  "description": "test",
+  "price": -5,
+  "stock": 10
 }
-
-### Prodotto SENZA categorie (categoria facoltativa)
-POST http://localhost:8080/products
-Content-Type: application/json
-
-{
-  "name": "Cavo USB-C",
-  "description": "Cavo da 1 metro",
-  "price": 9.90,
-  "stock": 100
-}
-
-### Lista prodotti (vedi le categorie annidate)
-GET http://localhost:8080/products

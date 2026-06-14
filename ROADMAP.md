@@ -248,7 +248,7 @@ trasformano da "esercizio" a "portfolio che impressiona".
 - [x] Fase 0 — Setup
 - [x] Fase 1 — CRUD base
 - [x] Fase 2 — JPA + PostgreSQL
-- [ ] Fase 3 — Validazione & errori
+- [x] Fase 3 — Validazione & errori
 - [ ] Fase 4 — Sicurezza JWT
 - [ ] Fase 5 — Carrello & ordini
 - [ ] Fase 6 — Testing
