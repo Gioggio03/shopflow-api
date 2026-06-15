@@ -249,7 +249,7 @@ trasformano da "esercizio" a "portfolio che impressiona".
 - [x] Fase 1 — CRUD base
 - [x] Fase 2 — JPA + PostgreSQL
 - [x] Fase 3 — Validazione & errori
-- [ ] Fase 4 — Sicurezza JWT
+- [x] Fase 4 — Sicurezza JWT
 - [ ] Fase 5 — Carrello & ordini
 - [ ] Fase 6 — Testing
 - [ ] Fase 7 — Documentazione & qualità

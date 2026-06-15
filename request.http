@@ -1,10 +1,6 @@
-### Prodotto NON valido (nome vuoto, prezzo negativo)
+### POST con token ADMIN -> 201 Created
 POST http://localhost:8080/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QG1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzgxNTE1NTEwLCJleHAiOjE3ODE2MDE5MTB9.44EFraTPHIgFBZ6dXGLb9L1aUlDmbRhUg6_4ZUMfpyo
 Content-Type: application/json
 
-{
-  "name": "",
-  "description": "test",
-  "price": -5,
-  "stock": 10
-}
+{ "name": "Prodotto Admin", "price": 49.90, "stock": 10 }
