@@ -1,0 +1,11 @@
+### 2. Crea un ordine valido
+POST http://localhost:8080/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpb0BtYWlsLmNvbSIsInJvbGUiOiJDVVNUT01FUiIsImlhdCI6MTc4MTcwODA3OSwiZXhwIjoxNzgxNzk0NDc5fQ.qNYF7CgFYt_tcImdx1IRCz6FJmcTdk4H5tp3rhmB2Ow
+Content-Type: application/json
+
+{
+  "items": [
+    { "productId": 7, "quantity": 2 },
+    { "productId": 8, "quantity": 1 }
+  ]
+}
